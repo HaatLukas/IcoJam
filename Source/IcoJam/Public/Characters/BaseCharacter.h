@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "BaseCharacter.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class ICOJAM_API ABaseCharacter : public ACharacter
 {
 	GENERATED_BODY()

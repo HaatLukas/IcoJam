@@ -6,10 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "JamPlayerController.generated.h"
 
-/**
- * 
- */
-UCLASS()
+
+UCLASS(Abstract)
 class ICOJAM_API AJamPlayerController : public APlayerController
 {
 	GENERATED_BODY()

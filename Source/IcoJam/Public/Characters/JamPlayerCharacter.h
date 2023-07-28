@@ -3,17 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "BaseCharacter.h"
 #include "InputActionValue.h"
 #include "InputMappingContext.h"
-#include "EnhancedInputComponent.h"
 #include "JamPlayerCharacter.generated.h"
 
 class UCameraComponent;
 class USpringArmComponent;
 
-UCLASS()
-class ICOJAM_API AJamPlayerCharacter : public ACharacter
+UCLASS(Abstract)
+class ICOJAM_API AJamPlayerCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 
