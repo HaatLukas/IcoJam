@@ -1,6 +1,6 @@
 # Ignore built binaries and temporary build files
 Intermediate/
-Binaries/
+
 Saved/
 DerivedDataCache/
 Platforms/
