@@ -9,7 +9,7 @@
 
 class UPawnSensingComponent;
 
-UCLASS()
+UCLASS(Abstract)
 class ICOJAM_API ABaseEnemy : public ABaseCharacter
 {
 	GENERATED_BODY()
@@ -24,10 +24,10 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-		UPawnSensingComponent* SensingComponent;
+	UPawnSensingComponent* SensingComponent;
 
-//	UFUNCTION()
-	//	void PawnSeen(APawn* SeenPawn);
+	UFUNCTION(BlueprintCallable, Category = "AI")
+	void OnPawnSeen(APawn* SeenPawn);
 	
 
 };

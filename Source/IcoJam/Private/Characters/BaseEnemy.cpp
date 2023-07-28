@@ -6,6 +6,7 @@
 #include "Animation/AnimMontage.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "AIController.h"
+#include "Debug.h"
 #include "Perception/PawnSensingComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -27,11 +28,16 @@ void ABaseEnemy::BeginPlay()
 
 	if (SensingComponent)
 	{
-		//SensingComponent->OnSeePawn.AddDynamic(this, &ABaseEnemy::PawnSeen);
+		SensingComponent->OnSeePawn.AddDynamic(this, &ABaseEnemy::OnPawnSeen);
 		Tags.Add(FName("Enemy"));
 	}
 	
 
+}
+
+void ABaseEnemy::OnPawnSeen(APawn* SeenPawn)
+{
+	Print(this,  FString::Printf(TEXT("I see: %s"), *SeenPawn->GetName()));
 }
 
 // Called every frame
