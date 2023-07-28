@@ -28,3 +28,8 @@ Plugins/
 
 # Ignore P4config file
 .p4config
+
+
+# Mac files
+__MACOSX/
+*.DS_Store
