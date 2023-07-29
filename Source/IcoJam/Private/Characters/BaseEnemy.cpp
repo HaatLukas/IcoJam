@@ -52,7 +52,7 @@ bool ABaseEnemy::InTargetRange(AActor* Target, double AcceptanceRadius) const
 
 void ABaseEnemy::OnPawnSeen(APawn* SeenPawn)
 {
-	Print(this,  FString::Printf(TEXT("I see: %s"), *SeenPawn->GetName()));
+	//Print(this,  FString::Printf(TEXT("I see: %s"), *SeenPawn->GetName()));
 	MoveToTarget(SeenPawn);
 }
 
@@ -106,11 +106,9 @@ void ABaseEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	PatrolToTarget();
-
 }
 void ABaseEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
