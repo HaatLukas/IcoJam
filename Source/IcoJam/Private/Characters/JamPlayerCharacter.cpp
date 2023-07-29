@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Characters/JamPlayerCharacter.h"
-#include "EnhancedInputComponent.h"
 #include "Debug.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 AJamPlayerCharacter::AJamPlayerCharacter()
@@ -19,12 +19,15 @@ AJamPlayerCharacter::AJamPlayerCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);
 
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+
 }
 
 void AJamPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	SetCameraType(PlayerCameraType);
 }
 
 void AJamPlayerCharacter::Move(const float ValueX, const float ValueY)
@@ -60,57 +63,70 @@ void AJamPlayerCharacter::Look(const float ValueX, const float ValueY)
 	}
 }
 
-void AJamPlayerCharacter::OnCrouchActionStarted(const FInputActionValue& Value)
+void AJamPlayerCharacter::Sprint() const
 {
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 }
 
-void AJamPlayerCharacter::OnCrouchActionEnded(const FInputActionValue& Value)
+void AJamPlayerCharacter::StopSprinting() const
 {
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 }
 
-void AJamPlayerCharacter::ThrowDistraction(const FInputActionValue& Value)
+void AJamPlayerCharacter::SwitchCamera()
 {
-	if (Value.Get<bool>() == true)
+	if (!bAllowCameraSwitch) return;
+
+	if (PlayerCameraType == ECT_FirstPerson)
 	{
-		Print(this, FString::Printf(TEXT("Throw a object")));
+		SetCameraType(ECT_ThirdPerson);
+	}
+	else
+	{
+		SetCameraType(ECT_FirstPerson);
 	}
 }
 
-void AJamPlayerCharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
+void AJamPlayerCharacter::SetCameraType(const ECameraType NewCameraType)
 {
-	Super::OnStartCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
+	switch (NewCameraType)
+	{
+	case ECT_FirstPerson:
+		{
+			SpringArm->TargetArmLength = 0.f;
+			SpringArm->SetRelativeLocation(FPSArmOffset);
+			GetMesh()->SetOwnerNoSee(true);
+			PlayerCameraType = ECT_FirstPerson;
+			
+			break;
+		}
+
+	case ECT_ThirdPerson:
+		{
+			SpringArm->TargetArmLength = TPSArmLength;
+			SpringArm->SetRelativeLocation(FVector::ZeroVector);
+			GetMesh()->SetOwnerNoSee(false);
+			PlayerCameraType = ECT_ThirdPerson;
+			
+			break;
+		}
+	}
 }
 
-void AJamPlayerCharacter::OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
+void AJamPlayerCharacter::ThrowDistraction()
 {
-	Super::OnEndCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
+	Print(this, "Throw a object");
 }
 
-void AJamPlayerCharacter::OnSprintActionStarted(const FInputActionValue& Value)
-{
-}
-
-void AJamPlayerCharacter::OnSprintActionEnded(const FInputActionValue& Value)
-{
-}
-
-// Called every frame
 void AJamPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-// Called to bind functionality to input
 void AJamPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
-	{
-
-		EnhancedInputComponent->BindAction(ThrowAction, ETriggerEvent::Triggered, this, &AJamPlayerCharacter::ThrowDistraction);
-
-	}
 
 }
 

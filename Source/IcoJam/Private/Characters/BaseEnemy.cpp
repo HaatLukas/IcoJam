@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Characters/BaseEnemy.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimMontage.h"
@@ -8,20 +7,16 @@
 #include "AIController.h"
 #include "Debug.h"
 #include "Perception/PawnSensingComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "NavigationSystem.h"
+#include "Navigation/PathFollowingComponent.h"
 
 
 ABaseEnemy::ABaseEnemy()
 {
- 	
 	PrimaryActorTick.bCanEverTick = true;
 	SensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("Sensing Component"));
 	SensingComponent->SightRadius = 4000.f;
 	SensingComponent->SetPeripheralVisionAngle(45.f);
-
 }
-
 
 void ABaseEnemy::BeginPlay()
 {
@@ -34,19 +29,19 @@ void ABaseEnemy::InitializeEnemy()
 	if (SensingComponent)
 	{
 		SensingComponent->OnSeePawn.AddDynamic(this, &ABaseEnemy::OnPawnSeen);
-		UE_LOG(LogTemp, Warning, TEXT("SensingComponentActive"));
+		PrintLog("SensingComponentActive");
 		Tags.Add(FName("Enemy"));
 	}
 	EnemyController = Cast<AAIController>(GetController());
 	GetCharacterMovement()->MaxWalkSpeed = PatrolSpeed;
 }
 
-void ABaseEnemy::PatrolTimerFinished()
+void ABaseEnemy::PatrolTimerFinished() const
 {
 	MoveToTarget(CurrentPatrolTarget);
 }
 
-bool ABaseEnemy::InTargetRange(AActor* Target, double AcceptanceRadius)
+bool ABaseEnemy::InTargetRange(AActor* Target, double AcceptanceRadius) const
 {	
 	{
 		if (Target == nullptr) return false;
@@ -86,7 +81,7 @@ AActor* ABaseEnemy::ChooseRandomTarget()
 	return nullptr;
 }
 
-void ABaseEnemy::MoveToTarget(AActor* Target)
+void ABaseEnemy::MoveToTarget(const AActor* Target) const
 {
 	if (EnemyController == nullptr || Target == nullptr) return;
 

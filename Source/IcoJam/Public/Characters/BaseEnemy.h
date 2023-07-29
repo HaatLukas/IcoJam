@@ -19,10 +19,11 @@ public:
 	ABaseEnemy();
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY( EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, Category = "Movement")
 		float ChasingSpeed = 500.f;
 
 	UPROPERTY( EditAnywhere, Category = "Movement")
@@ -33,8 +34,7 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float WaitMax = 5.f;
-
-
+	
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		double PatrolRadius = 4000.f;
 
@@ -51,18 +51,18 @@ protected:
 	
 	//UPROPERTY()
 	AActor* ChooseRandomTarget();
+	
 private:
 	void InitializeEnemy();
-
-
+	
 	/*
 	 Navivgation
 	*/
 
 	UPROPERTY(VisibleAnywhere)
 	UPawnSensingComponent* SensingComponent;
-	void PatrolTimerFinished();
-	bool InTargetRange(AActor* Target, double AcceptanceRadius);
+	void PatrolTimerFinished() const;
+	bool InTargetRange(AActor* Target, double AcceptanceRadius) const;
 
 	/*
 	* AI Stuff
@@ -74,12 +74,9 @@ private:
 	//UPROPERTY()
 	//bool GenerateRandomLocation();
 	
-
-	void MoveToTarget(AActor* Target);
+	void MoveToTarget(const AActor* Target) const;
 	void PatrolToTarget();
 	
 	FTimerHandle PatrolTimer;
-	
-
 };
 
