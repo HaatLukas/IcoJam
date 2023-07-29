@@ -4,6 +4,7 @@
 #include "EnhancedInputComponent.h"
 #include "Debug.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 AJamPlayerCharacter::AJamPlayerCharacter()
@@ -60,12 +61,14 @@ void AJamPlayerCharacter::Look(const float ValueX, const float ValueY)
 	}
 }
 
-void AJamPlayerCharacter::OnCrouchActionStarted(const FInputActionValue& Value)
+void AJamPlayerCharacter::Sprint() const
 {
+	GetCharacterMovement()->MaxWalkSpeed *= SprintMultiplier;
 }
 
-void AJamPlayerCharacter::OnCrouchActionEnded(const FInputActionValue& Value)
+void AJamPlayerCharacter::StopSprinting() const
 {
+	GetCharacterMovement()->MaxWalkSpeed /= SprintMultiplier;
 }
 
 void AJamPlayerCharacter::ThrowDistraction(const FInputActionValue& Value)
@@ -76,32 +79,12 @@ void AJamPlayerCharacter::ThrowDistraction(const FInputActionValue& Value)
 	}
 }
 
-void AJamPlayerCharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
-{
-	Super::OnStartCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
-}
-
-void AJamPlayerCharacter::OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
-{
-	Super::OnEndCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
-}
-
-void AJamPlayerCharacter::OnSprintActionStarted(const FInputActionValue& Value)
-{
-}
-
-void AJamPlayerCharacter::OnSprintActionEnded(const FInputActionValue& Value)
-{
-}
-
-// Called every frame
 void AJamPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-// Called to bind functionality to input
 void AJamPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

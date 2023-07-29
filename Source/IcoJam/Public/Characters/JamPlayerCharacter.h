@@ -38,6 +38,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Input", meta = (AllowPrivateAccess = "true"))
 	bool bInvertYAxis = true;
 
+	/** Sprint Multiplier */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Input", meta = (AllowPrivateAccess = "true"))
+	float SprintMultiplier = 1.25f;
+
 	/** INPUT */
 
 	UPROPERTY(EditAnywhere, Category = "Player|Input")
@@ -48,25 +52,14 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void Look(const float ValueX, const float ValueY);
-	
-
-	UFUNCTION(BlueprintCallable, Category = "Player|Input")
-	void OnCrouchActionStarted(const FInputActionValue& Value);
-
-	UFUNCTION(BlueprintCallable, Category = "Player|Input")
-	void OnCrouchActionEnded(const FInputActionValue& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 		void ThrowDistraction(const FInputActionValue& Value);
-
-	virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
-
-	virtual void OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
-	void OnSprintActionStarted(const FInputActionValue& Value);
+	void Sprint() const;
 
-	void OnSprintActionEnded(const FInputActionValue& Value);
+	void StopSprinting() const;
 
 public:	
 	// Called every frame
