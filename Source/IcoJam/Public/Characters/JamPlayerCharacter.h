@@ -4,9 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "BaseCharacter.h"
-#include "InputActionValue.h"
 #include "InputMappingContext.h"
 #include "JamPlayerCharacter.generated.h"
+
+UENUM()
+enum ECameraType
+{
+	ECT_FirstPerson = 0 UMETA(DisplayName = "First Person"),
+	ECT_ThirdPerson = 1 UMETA(DisplayName = "Third Person")
+};
 
 class UCameraComponent;
 class USpringArmComponent;
@@ -34,6 +40,20 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Input", meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
 
+	/** Should the player be in TPS or FPS */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Camera", meta = (AllowPrivateAccess = "true"))
+	TEnumAsByte<ECameraType> PlayerCameraType = ECT_FirstPerson;
+
+	/** Allow the player to switch between TPS and FPS */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Camera", meta = (AllowPrivateAccess = "true"))
+	bool bAllowCameraSwitch = true;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Camera", meta = (AllowPrivateAccess = "true"))
+	float TPSArmLength = 400.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Camera", meta = (AllowPrivateAccess = "true"))
+	FVector FPSArmOffset = FVector(20.f, 0.f, 70.f);
+	
 	/** Invert Y Axis */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Input", meta = (AllowPrivateAccess = "true"))
 	bool bInvertYAxis = true;
@@ -61,11 +81,14 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void StopSprinting() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Player|Input")
+	void SwitchCamera();
+
+	void SetCameraType(const ECameraType NewCameraType);
+
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };

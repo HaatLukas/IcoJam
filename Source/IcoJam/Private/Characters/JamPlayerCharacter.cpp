@@ -26,7 +26,8 @@ AJamPlayerCharacter::AJamPlayerCharacter()
 void AJamPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	SetCameraType(PlayerCameraType);
 }
 
 void AJamPlayerCharacter::Move(const float ValueX, const float ValueY)
@@ -70,6 +71,46 @@ void AJamPlayerCharacter::Sprint() const
 void AJamPlayerCharacter::StopSprinting() const
 {
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+}
+
+void AJamPlayerCharacter::SwitchCamera()
+{
+	if (!bAllowCameraSwitch) return;
+
+	if (PlayerCameraType == ECT_FirstPerson)
+	{
+		SetCameraType(ECT_ThirdPerson);
+	}
+	else
+	{
+		SetCameraType(ECT_FirstPerson);
+	}
+}
+
+void AJamPlayerCharacter::SetCameraType(const ECameraType NewCameraType)
+{
+	switch (NewCameraType)
+	{
+	case ECT_FirstPerson:
+		{
+			SpringArm->TargetArmLength = 0.f;
+			SpringArm->SetRelativeLocation(FPSArmOffset);
+			GetMesh()->SetOwnerNoSee(true);
+			PlayerCameraType = ECT_FirstPerson;
+			
+			break;
+		}
+
+	case ECT_ThirdPerson:
+		{
+			SpringArm->TargetArmLength = TPSArmLength;
+			SpringArm->SetRelativeLocation(FVector::ZeroVector);
+			GetMesh()->SetOwnerNoSee(false);
+			PlayerCameraType = ECT_ThirdPerson;
+			
+			break;
+		}
+	}
 }
 
 void AJamPlayerCharacter::ThrowDistraction()
