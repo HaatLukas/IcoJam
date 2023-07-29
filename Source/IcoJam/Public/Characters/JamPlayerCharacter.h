@@ -38,9 +38,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Input", meta = (AllowPrivateAccess = "true"))
 	bool bInvertYAxis = true;
 
-	/** Sprint Multiplier */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Input", meta = (AllowPrivateAccess = "true"))
-	float SprintMultiplier = 1.25f;
+	/** Walk Speed */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Movement", meta = (AllowPrivateAccess = "true"))
+	float WalkSpeed = 500.f;
+
+	/** Sprint Speed */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Movement", meta = (AllowPrivateAccess = "true"))
+	float SprintSpeed = 650.f;
 
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void Move(const float ValueX, const float ValueY);
@@ -54,6 +58,7 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void Sprint() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void StopSprinting() const;
 
 public:	

@@ -19,6 +19,8 @@ AJamPlayerCharacter::AJamPlayerCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);
 
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+
 }
 
 void AJamPlayerCharacter::BeginPlay()
@@ -62,12 +64,12 @@ void AJamPlayerCharacter::Look(const float ValueX, const float ValueY)
 
 void AJamPlayerCharacter::Sprint() const
 {
-	GetCharacterMovement()->MaxWalkSpeed *= SprintMultiplier;
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 }
 
 void AJamPlayerCharacter::StopSprinting() const
 {
-	GetCharacterMovement()->MaxWalkSpeed /= SprintMultiplier;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 }
 
 void AJamPlayerCharacter::ThrowDistraction()
