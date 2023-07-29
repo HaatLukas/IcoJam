@@ -113,6 +113,28 @@ void AJamPlayerCharacter::SetCameraType(const ECameraType NewCameraType)
 	}
 }
 
+void AJamPlayerCharacter::HeadBobbing()
+{
+	const auto PC = Cast<APlayerController>(GetController());
+
+	if (!PC) return;
+
+	const auto Speed = GetVelocity().Size();
+
+	if (Speed > 0.f && Speed <= WalkSpeed)
+	{
+		PC->PlayerCameraManager->StartCameraShake(WalkingHeadbobClass);
+	}
+	else if (Speed > WalkSpeed && Speed <= SprintSpeed)
+	{
+		PC->PlayerCameraManager->StartCameraShake(SprintingHeadbobClass);
+	}
+	else
+	{
+		PC->PlayerCameraManager->StartCameraShake(IdleHeadbobClass);
+	}
+}
+
 void AJamPlayerCharacter::ThrowDistraction()
 {
 	Print(this, "Throw a object");
