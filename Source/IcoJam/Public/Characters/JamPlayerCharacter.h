@@ -42,11 +42,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Input", meta = (AllowPrivateAccess = "true"))
 	float SprintMultiplier = 1.25f;
 
-	/** INPUT */
-
-	UPROPERTY(EditAnywhere, Category = "Player|Input")
-		UInputAction* ThrowAction;
-
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void Move(const float ValueX, const float ValueY);
 
@@ -54,7 +49,7 @@ protected:
 	void Look(const float ValueX, const float ValueY);
 
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
-		void ThrowDistraction(const FInputActionValue& Value);
+	void ThrowDistraction();
 	
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void Sprint() const;

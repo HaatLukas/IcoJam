@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Characters/JamPlayerCharacter.h"
-#include "EnhancedInputComponent.h"
 #include "Debug.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -71,12 +70,9 @@ void AJamPlayerCharacter::StopSprinting() const
 	GetCharacterMovement()->MaxWalkSpeed /= SprintMultiplier;
 }
 
-void AJamPlayerCharacter::ThrowDistraction(const FInputActionValue& Value)
+void AJamPlayerCharacter::ThrowDistraction()
 {
-	if (Value.Get<bool>() == true)
-	{
-		Print(this, FString::Printf(TEXT("Throw a object")));
-	}
+	Print(this, "Throw a object");
 }
 
 void AJamPlayerCharacter::Tick(float DeltaTime)
@@ -88,12 +84,6 @@ void AJamPlayerCharacter::Tick(float DeltaTime)
 void AJamPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
-	{
-
-		EnhancedInputComponent->BindAction(ThrowAction, ETriggerEvent::Triggered, this, &AJamPlayerCharacter::ThrowDistraction);
-
-	}
 
 }
 
