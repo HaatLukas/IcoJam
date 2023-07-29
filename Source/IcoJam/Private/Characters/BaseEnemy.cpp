@@ -58,6 +58,7 @@ bool ABaseEnemy::InTargetRange(AActor* Target, double AcceptanceRadius)
 void ABaseEnemy::OnPawnSeen(APawn* SeenPawn)
 {
 	Print(this,  FString::Printf(TEXT("I see: %s"), *SeenPawn->GetName()));
+	MoveToTarget(SeenPawn);
 }
 
 /*
