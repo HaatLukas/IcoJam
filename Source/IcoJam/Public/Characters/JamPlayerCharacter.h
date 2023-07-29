@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BaseCharacter.h"
 #include "InputMappingContext.h"
+#include "LegacyCameraShake.h"
 #include "JamPlayerCharacter.generated.h"
 
 UENUM()
@@ -66,6 +67,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Movement", meta = (AllowPrivateAccess = "true"))
 	float SprintSpeed = 650.f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Movement", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<ULegacyCameraShake> IdleHeadbobClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Movement", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<ULegacyCameraShake> WalkingHeadbobClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Config|Movement", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<ULegacyCameraShake> SprintingHeadbobClass;
+
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void Move(const float ValueX, const float ValueY);
 
@@ -85,6 +95,9 @@ protected:
 	void SwitchCamera();
 
 	void SetCameraType(const ECameraType NewCameraType);
+
+	UFUNCTION(BlueprintCallable, Category = "Player|Input")
+	void HeadBobbing();
 
 public:	
 	virtual void Tick(float DeltaTime) override;
