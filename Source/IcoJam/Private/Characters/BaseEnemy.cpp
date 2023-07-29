@@ -34,6 +34,7 @@ void ABaseEnemy::InitializeEnemy()
 	}
 	EnemyController = Cast<AAIController>(GetController());
 	GetCharacterMovement()->MaxWalkSpeed = PatrolSpeed;
+	SpawnDefaultController();
 }
 
 void ABaseEnemy::PatrolTimerFinished() const
