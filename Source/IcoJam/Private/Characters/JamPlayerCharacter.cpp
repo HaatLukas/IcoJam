@@ -68,6 +68,14 @@ void AJamPlayerCharacter::OnCrouchActionEnded(const FInputActionValue& Value)
 {
 }
 
+void AJamPlayerCharacter::ThrowDistraction(const FInputActionValue& Value)
+{
+	if (Value.Get<bool>() == true)
+	{
+		Print(this, FString::Printf(TEXT("Throw a object")));
+	}
+}
+
 void AJamPlayerCharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
 {
 	Super::OnStartCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
@@ -97,6 +105,12 @@ void AJamPlayerCharacter::Tick(float DeltaTime)
 void AJamPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+
+		EnhancedInputComponent->BindAction(ThrowAction, ETriggerEvent::Triggered, this, &AJamPlayerCharacter::ThrowDistraction);
+
+	}
 
 }
 

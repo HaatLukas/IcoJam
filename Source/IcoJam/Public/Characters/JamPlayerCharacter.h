@@ -39,6 +39,10 @@ protected:
 	bool bInvertYAxis = true;
 
 	/** INPUT */
+
+	UPROPERTY(EditAnywhere, Category = "Player|Input")
+		UInputAction* ThrowAction;
+
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void Move(const float ValueX, const float ValueY);
 
@@ -51,6 +55,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Player|Input")
 	void OnCrouchActionEnded(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Player|Input")
+		void ThrowDistraction(const FInputActionValue& Value);
 
 	virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
 
