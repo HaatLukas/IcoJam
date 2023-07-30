@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "IcoJam",
+			"Path": "D:\\IcoJamHorrorGame\\branches\\14385Games-ScaryMenu\\Source\\IcoJam.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "IcoJamEditor",
+			"Path": "D:\\IcoJamHorrorGame\\branches\\14385Games-ScaryMenu\\Source\\IcoJamEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
