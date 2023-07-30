@@ -71,7 +71,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall", meta=(AllowPrivateAccess=true))
 	TObjectPtr<UStaticMesh> WallMesh;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall", meta=(AllowPrivateAccess=true))
-	FVector WallSize = FVector(200.0f, 200.0f, 300.0f);;
+	FVector WallSize = FVector(200.0f, 200.0f, 300.0f);
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall", meta=(AllowPrivateAccess=true))
 	FRotator WallRotation;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Lights", meta=(AllowPrivateAccess=true))
