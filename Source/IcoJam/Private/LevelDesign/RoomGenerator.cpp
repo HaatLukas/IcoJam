@@ -79,6 +79,82 @@ void ARoomGenerator::GenerateWalls()
 	}
 }
 
+void ARoomGenerator::GenerateComplexities()
+{
+	if (!bGenerateComplexities) return;
+
+	if (bGenerateInternalWalls)
+	{
+		GenerateInternalWalls();
+	}
+	else if (bGeneratePillars)
+	{
+		GeneratePillars();
+	}
+	else
+	{
+		Print(this, "No complexities selected!");
+	}
+}
+
+void ARoomGenerator::GenerateInternalWalls()
+{
+	if (!InternalWallMesh)
+	{
+		Print(this, "Missing InternalWallMesh!");
+		return;
+	}
+
+	// Calculate the total number of possible positions for the walls
+	const int TotalPositions = (RoomSize.X - 2) * (RoomSize.Y - 2); // -2 to exclude the perimeter of the room
+
+	// Calculate the number of walls to place
+	const int WallsToPlace = FMath::RoundToInt(TotalPositions * InternalWallPercentage);
+
+	// Randomly place the walls
+	for (int i = 0; i < WallsToPlace; i++)
+	{
+		const int X = FMath::RandRange(1.0, RoomSize.X - 2); // avoid placing walls on the edges
+		const int Y = FMath::RandRange(1.0, RoomSize.Y - 2); // avoid placing walls on the edges
+
+		const FVector Transform = FVector(X * InternalWallSize.X, Y * InternalWallSize.Y, 0.0f);
+
+		// Randomly rotate some walls by 90 degrees
+		const FRotator Rotation = FMath::RandBool() ? FRotator::ZeroRotator : FRotator(0.0f, 90.0f, 0.0f);
+
+		UStaticMeshComponent* Wall = SpawnComponent(Transform, Rotation, InternalWallMesh, "InternalWall", X, Y);
+		Wall->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+	}
+}
+
+void ARoomGenerator::GeneratePillars()
+{
+	if (!PillarMesh)
+	{
+		Print(this, "Missing PillarMesh!");
+		return;
+	}
+
+	// Calculate the total number of possible positions for the walls
+	const int TotalPositions = (RoomSize.X - 2) * (RoomSize.Y - 2); // -2 to exclude the perimeter of the room
+
+	// Calculate the number of walls to place
+	const int PillarsToPlace = FMath::RoundToInt(TotalPositions * PillarPercentage);
+
+	// Randomly place the walls
+	for (int i = 0; i < PillarsToPlace; i++)
+	{
+		const int X = FMath::RandRange(1.0, RoomSize.X - 2); // avoid placing walls on the edges
+		const int Y = FMath::RandRange(1.0, RoomSize.Y - 2); // avoid placing walls on the edges
+
+		const FVector Transform = FVector(X * PillarSize.X, Y * PillarSize.Y, 0.0f);
+
+		UStaticMeshComponent* Pillar = SpawnComponent(Transform, FRotator::ZeroRotator, PillarMesh, "Pillar", X, Y);
+		Pillar->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.2f));
+		Pillar->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+	}
+}
+
 UStaticMeshComponent* ARoomGenerator::SpawnComponent(FVector Transform, FRotator Rotation, UStaticMesh* Mesh, FString NamePrefix, int x, int y)
 {
 	UStaticMeshComponent* NewComponent = NewObject<UStaticMeshComponent>(this, FName(*FString::Printf(TEXT("%s_%d_%d"), *NamePrefix, x, y)));
@@ -181,6 +257,6 @@ void ARoomGenerator::GenerateRoom()
 	ResetIndex();
 	GenerateFloor();
 	GenerateCeiling();
-
 	GenerateWalls();
+	GenerateComplexities();
 }

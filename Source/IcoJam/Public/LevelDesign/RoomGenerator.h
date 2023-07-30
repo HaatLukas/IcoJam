@@ -20,6 +20,14 @@ protected:
 	UFUNCTION()
 	void GenerateWalls();
 
+	void GenerateComplexities();
+
+	UFUNCTION()
+	void GenerateInternalWalls();
+
+	UFUNCTION()
+	void GeneratePillars();
+
 	UFUNCTION()
 	void GenerateFloor();
 
@@ -70,6 +78,28 @@ protected:
 	TSubclassOf<AActor> WallLightClass;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Lights", meta=(AllowPrivateAccess=true))
 	int32 WallLightFrequency = 3;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true))
+	bool bGenerateComplexities = false;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="!bGeneratePillars bGenerateComplexities"))
+	bool bGenerateInternalWalls = false;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGenerateInternalWalls"))
+	TObjectPtr<UStaticMesh> InternalWallMesh;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGenerateInternalWalls"))
+	FVector InternalWallSize = FVector(200.0f, 200.0f, 300.0f);;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGenerateInternalWalls"))
+	float InternalWallPercentage = 0.5f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="!bGenerateInternalWalls bGenerateComplexities"))
+	bool bGeneratePillars = false;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGeneratePillars"))
+	TObjectPtr<UStaticMesh> PillarMesh;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGeneratePillars"))
+	FVector PillarSize = FVector(200.0f, 200.0f, 300.0f);;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGeneratePillars"))
+	float PillarPercentage = 0.5f;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Ceiling", meta=(AllowPrivateAccess=true))
 	TObjectPtr<UStaticMesh> CeilingMesh;
