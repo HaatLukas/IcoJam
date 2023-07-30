@@ -87,13 +87,10 @@ void ARoomGenerator::GenerateComplexities()
 	{
 		GenerateInternalWalls();
 	}
-	else if (bGeneratePillars)
+	
+	if (bGeneratePillars)
 	{
 		GeneratePillars();
-	}
-	else
-	{
-		Print(this, "No complexities selected!");
 	}
 }
 
@@ -123,6 +120,8 @@ void ARoomGenerator::GenerateInternalWalls()
 		const FRotator Rotation = FMath::RandBool() ? FRotator::ZeroRotator : FRotator(0.0f, 90.0f, 0.0f);
 
 		UStaticMeshComponent* Wall = SpawnComponent(Transform, Rotation, InternalWallMesh, "InternalWall", X, Y);
+
+		Wall->SetRelativeScale3D(InternalWallScale);
 		Wall->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 	}
 }
@@ -150,7 +149,7 @@ void ARoomGenerator::GeneratePillars()
 		const FVector Transform = FVector(X * PillarSize.X, Y * PillarSize.Y, 0.0f);
 
 		UStaticMeshComponent* Pillar = SpawnComponent(Transform, FRotator::ZeroRotator, PillarMesh, "Pillar", X, Y);
-		Pillar->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.2f));
+		Pillar->SetRelativeScale3D(PillarScale);
 		Pillar->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 	}
 }

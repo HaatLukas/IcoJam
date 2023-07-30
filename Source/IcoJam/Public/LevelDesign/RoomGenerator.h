@@ -71,7 +71,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall", meta=(AllowPrivateAccess=true))
 	TObjectPtr<UStaticMesh> WallMesh;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall", meta=(AllowPrivateAccess=true))
-	FVector WallSize = FVector(200.0f, 200.0f, 300.0f);;
+	FVector WallSize = FVector(200.0f, 200.0f, 300.0f);
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall", meta=(AllowPrivateAccess=true))
 	FRotator WallRotation;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Lights", meta=(AllowPrivateAccess=true))
@@ -88,7 +88,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGenerateInternalWalls"))
 	TObjectPtr<UStaticMesh> InternalWallMesh;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGenerateInternalWalls"))
-	FVector InternalWallSize = FVector(200.0f, 200.0f, 300.0f);;
+	FVector InternalWallSize = FVector(200.0f, 200.0f, 300.0f);
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGenerateInternalWalls"))
+	FVector InternalWallScale = FVector(1.0f, 1.0f, 1.0f);
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGenerateInternalWalls"))
 	float InternalWallPercentage = 0.5f;
 
@@ -97,7 +99,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGeneratePillars"))
 	TObjectPtr<UStaticMesh> PillarMesh;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGeneratePillars"))
-	FVector PillarSize = FVector(200.0f, 200.0f, 300.0f);;
+	FVector PillarSize = FVector(200.0f, 200.0f, 300.0f);
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGeneratePillars"))
+	FVector PillarScale = FVector(1.0f, 1.0f, 1.0f);
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Room|Config|Wall|Complexities", meta=(AllowPrivateAccess=true, EditCondition="bGeneratePillars"))
 	float PillarPercentage = 0.5f;
 	
